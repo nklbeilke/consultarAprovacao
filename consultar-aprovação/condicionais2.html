@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Verificar </h1>
+    <h1>Verificar</h1>
     <p>Digite suas notas para verificar se você passou de ano</p>
     
     <label for="nota1">Primeira Nota:</label>
@@ -25,28 +25,53 @@
     <button onclick="verificarAprovacao()">Verificar Resultado</button>
 
     <p id="resultado"></p>
+    <div id="popup">
+        <div class="popup-content">
+            <span class="close" onclick="fecharPopup()">&times;</span>
+            <h2 id="titulo"></h2>
+            <img id="gif" src="" alt="Resultado">
+        </div>
+    </div>
 
     <script>
         function verificarAprovacao() {
-            const nota1 = parseFloat(document.getElementById("nota1").value);
-            const nota2 = parseFloat(document.getElementById("nota2").value);
-            const nota3 = parseFloat(document.getElementById("nota3").value);
+            const n1 = parseFloat(document.getElementById("nota1").value);
+            const n2 = parseFloat(document.getElementById("nota2").value);
+            const n3 = parseFloat(document.getElementById("nota3").value);
             const resultado = document.getElementById("resultado");
 
-            if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
+            if (isNaN(n1) || isNaN(n2) || isNaN(n3)) {
                 resultado.innerText = "Inválido, você precisa preencher todos os campos!";
                 return;
             }
 
-            const soma = nota1 + nota2 + nota3;
+            const soma = n1 + n2 + n3;
+
+            let titulo = "";
+            let gif = "";
 
             if (soma >= 180) {
-                resultado.innerText = `Parabéns, você passou de ano, sua nota é": ${soma}`;
+                titulo = "Parabéns você passou!";
+                gif = "https://media.tenor.com/pzaBHhUlVQ8AAAAM/gato-dan%C3%A7ando.gif";
+                resultado.innerText = `Parabéns, você passou de ano! Sua nota é: ${soma}`;
             } else if (soma >= 130) {
-                resultado.innerText = `Quase lá, você está de recuperação, sua nota é: ${soma}. Faltam ${180 - soma} pontos para aprovação.`;
+                titulo = "Você está de recuperação, falta só mais um pouco!";
+                gif = "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcndybTA4b2djcmQxaGZyMGw5ZnZ5YzQ3dXhvN3hhZXBtbjY0MWc0NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JWnXY237vWeX3zx64V/giphy.gif";
+                resultado.innerText = `Você está de recuperação! Sua nota é: ${soma}.`;
             } else {
-                resultado.innerText = `Você está reprovado, estude mais, sua nota é: ${soma}`;
+                titulo = "Você está reprovado, estude mais!";
+                gif = "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWFrZnlrN3U1a2R0ZXFteHUwcDVlZnQ0d2did2Vxbm1uN2twZzN0YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/E2d2tsgz7iHo4/giphy.gif";
+                resultado.innerText = `Reprovado! Sua nota foi: ${soma}`;
             }
+
+            document.getElementById("titulo").innerText = titulo;
+            document.getElementById("gif").src = gif;
+
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        function fecharPopup() {
+            document.getElementById("popup").style.display = "none";
         }
     </script>
 </body>
